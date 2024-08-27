@@ -23,7 +23,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo "Performing code analysis"
-                sh 'mvn sonar:sonar'
+                sh 'mvn sonar:sonar -Dsonar.login=squ_cd3bc3e512163d412e69c8a3d406d1574d50e0a9'
             }
         }
         
