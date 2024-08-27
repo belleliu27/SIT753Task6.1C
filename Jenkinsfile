@@ -82,16 +82,20 @@ pipeline {
 
     post {
         success {
-            mail to: 'michaelzj23@gmail.com',
-                 subject: 'Build Successful',
-                 body: 'The build and deployment pipeline was successful. Logs attached.',
-                 attachLog: true
+            emailext(
+                to: 'michaelzj23@gmail.com',
+                subject: 'Build Successful',
+                body: 'The build and deployment pipeline was successful. Logs attached.',
+                attachLog: true
+            )
         }
         failure {
-            mail to: 'michaelzj23@gmail.com',
-                 subject: 'Build Failed',
-                 body: 'The build and deployment pipeline failed. Logs attached.',
-                 attachLog: true
+            emailext(
+                to: 'michaelzj23@gmail.com',
+                subject: 'Build Failed',
+                body: 'The build and deployment pipeline failed. Logs attached.',
+                attachLog: true
+            )
         }
     }
 }
