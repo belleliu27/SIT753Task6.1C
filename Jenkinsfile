@@ -68,16 +68,17 @@ pipeline {
 
     post {
         success {
-            mail to: 'michaelzj23@gmail.com',
+            mail to: 'your-email@example.com',
                  subject: 'Build Successful',
-                 body: 'The build was successful. Logs attached.',
-                 attachLog: true
+                 body: 'The build was successful. Logs are attached.',
+                 attachmentsPattern: '**/log/*.log',
         }
         failure {
-            mail to: 'michaelzj23@gmail.com',
+            mail to: 'your-email@example.com',
                  subject: 'Build Failed',
-                 body: 'The build failed. Logs attached.',
-                 attachLog: true
+                 body: 'The build failed. Logs are attached.',
+                 attachmentsPattern: '**/log/*.log',
         }
     }
+    
 }
