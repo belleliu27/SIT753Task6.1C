@@ -1,11 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.9' // Ensure this matches the name you configured in Jenkins
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo "Building the project"
-                // Tool: Maven
                 sh 'mvn clean package'
             }
         }
@@ -13,7 +16,6 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo "Running unit and integration tests"
-                // Tool: JUnit (or any other test automation tool)
                 sh 'mvn test'
             }
         }
@@ -21,7 +23,6 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo "Performing code analysis"
-                // Tool: SonarQube
                 sh 'mvn sonar:sonar'
             }
         }
@@ -29,7 +30,6 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Performing security scan"
-                // Tool: OWASP Dependency-Check
                 sh 'dependency-check --project MyProject --scan .'
             }
         }
@@ -37,7 +37,6 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying to staging environment"
-                // Tool: AWS CLI (for deployment)
                 sh 'aws s3 cp target/myapp.jar s3://my-staging-bucket/'
             }
         }
@@ -45,7 +44,6 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo "Running integration tests on staging"
-                // Tool: Selenium (or any other integration testing tool)
                 sh 'mvn verify'
             }
         }
@@ -53,7 +51,6 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo "Deploying to production environment"
-                // Tool: AWS CLI (for deployment)
                 sh 'aws s3 cp target/myapp.jar s3://my-production-bucket/'
             }
         }
