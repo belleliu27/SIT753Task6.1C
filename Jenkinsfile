@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven 3.9.9' // Ensure this matches the name you configured in Jenkins
-        dependencyCheck 'DC' // Ensure this matches the name you configured in Jenkins
+        
     }
 
     stages {
@@ -31,7 +31,8 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Performing security scan"
-                sh 'dependency-check --project MyProject --scan .'
+                sh '/usr/local/bin/dependency-check --project MyProject --scan .'
+
             }
         }
         
