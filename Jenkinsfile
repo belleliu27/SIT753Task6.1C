@@ -70,15 +70,14 @@ pipeline {
         success {
             mail to: 'your-email@example.com',
                  subject: 'Build Successful',
-                 body: 'The build was successful. Logs are attached.',
-                 attachmentsPattern: '**/log/*.log',
+                 body: 'The build was successful. Logs attached.',
+                 attachLog: true
         }
         failure {
             mail to: 'your-email@example.com',
                  subject: 'Build Failed',
-                 body: 'The build failed. Logs are attached.',
-                 attachmentsPattern: '**/log/*.log',
+                 body: 'The build failed. Logs attached.',
+                 attachLog: true
         }
     }
-    
 }
