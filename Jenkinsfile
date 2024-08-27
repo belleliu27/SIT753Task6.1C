@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+tools {
+        maven 'Maven 3.9.9'  // The name you specified in the Maven configuration
+    }
     stages {
         stage('Build') {
             steps {
@@ -69,7 +72,7 @@ pipeline {
     post {
         success {
             emailext(
-                to: 'your-email@example.com',
+                to: 'michaelzj23@gmail.com',
                 subject: 'Build Successful',
                 body: 'The build was successful. Please find the attached logs.',
                
@@ -77,7 +80,7 @@ pipeline {
         }
         failure {
             emailext(
-                to: 'your-email@example.com',
+                to: 'michaelzj23@gmail.com',
                 subject: 'Build Failed',
                 body: 'The build failed. Please find the attached logs.',
                
