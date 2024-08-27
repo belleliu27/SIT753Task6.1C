@@ -1,15 +1,20 @@
 pipeline {
     agent any
 
-tools {
-        maven 'Maven 3.9.9'  // The name you specified in the Maven configuration
-    }
     stages {
+        stage('Checkout') {
+            steps {
+                // Check out the code from the repository
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
-                    // Example build tool: Maven
-                    sh 'mvn clean package'
+                    // Build the project using Maven
+                    sh 'echo "Building the project with Maven..."'
+                    sh 'mvn clean package'  // Example: running a Maven build
                 }
             }
         }
@@ -17,8 +22,9 @@ tools {
         stage('Unit and Integration Tests') {
             steps {
                 script {
-                    // Example test tools: JUnit, TestNG
-                    sh 'mvn test'
+                    // Run unit and integration tests using Maven
+                    sh 'echo "Running unit and integration tests..."'
+                    sh 'mvn test'  // Example: running tests with Maven
                 }
             }
         }
@@ -26,8 +32,9 @@ tools {
         stage('Code Analysis') {
             steps {
                 script {
-                    // Example code analysis tool: SonarQube
-                    sh 'mvn sonar:sonar'
+                    // Perform code analysis using a tool like SonarQube
+                    sh 'echo "Performing code analysis with SonarQube..."'
+                    sh 'mvn sonar:sonar'  // Example: running SonarQube analysis
                 }
             }
         }
@@ -35,8 +42,9 @@ tools {
         stage('Security Scan') {
             steps {
                 script {
-                    // Example security scan tool: OWASP Dependency-Check
-                    sh 'dependency-check.sh --project my-project'
+                    // Perform a security scan using OWASP Dependency Check
+                    sh 'echo "Running security scan with OWASP Dependency Check..."'
+                    sh 'mvn org.owasp:dependency-check-maven:check'  // Example: running security scan
                 }
             }
         }
@@ -44,8 +52,9 @@ tools {
         stage('Deploy to Staging') {
             steps {
                 script {
-                    // Example deployment: AWS CLI
-                    sh 'aws s3 cp my-app.jar s3://my-staging-bucket/'
+                    // Deploy the application to the staging environment
+                    sh 'echo "Deploying to staging environment..."'
+                    sh './deploy-staging.sh'  // Example: running a deployment script
                 }
             }
         }
@@ -53,8 +62,9 @@ tools {
         stage('Integration Tests on Staging') {
             steps {
                 script {
-                    // Example test tool: Postman for API tests
-                    sh 'newman run my-api-tests.postman_collection.json'
+                    // Run integration tests on the staging environment
+                    sh 'echo "Running integration tests on staging environment..."'
+                    sh './integration-tests-staging.sh'  // Example: running integration tests on staging
                 }
             }
         }
@@ -62,8 +72,9 @@ tools {
         stage('Deploy to Production') {
             steps {
                 script {
-                    // Example deployment: AWS CLI
-                    sh 'aws s3 cp my-app.jar s3://my-production-bucket/'
+                    // Deploy the application to the production environment
+                    sh 'echo "Deploying to production environment..."'
+                    sh './deploy-production.sh'  // Example: running a production deployment script
                 }
             }
         }
@@ -71,20 +82,16 @@ tools {
 
     post {
         success {
-            emailext(
-                to: 'michaelzj23@gmail.com',
-                subject: 'Build Successful',
-                body: 'The build was successful. Please find the attached logs.',
-               
-            )
+            mail to: 'michaelzj23@gmail.com',
+                 subject: 'Build Successful',
+                 body: 'The build and deployment pipeline was successful. Logs attached.',
+                 attachLog: true
         }
         failure {
-            emailext(
-                to: 'michaelzj23@gmail.com',
-                subject: 'Build Failed',
-                body: 'The build failed. Please find the attached logs.',
-               
-            )
+            mail to: 'michaelzj23@gmail.com',
+                 subject: 'Build Failed',
+                 body: 'The build and deployment pipeline failed. Logs attached.',
+                 attachLog: true
         }
     }
 }
