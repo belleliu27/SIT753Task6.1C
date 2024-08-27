@@ -31,7 +31,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo "Performing security scan"
-                sh '/usr/local/bin/dependency-check --project MyProject --scan .'
+                sh '/opt/homebrew/bin/dependency-check --project MyProject --scan .'
 
             }
         }
